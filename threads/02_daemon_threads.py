@@ -2,7 +2,7 @@ import logging
 import threading
 import time
 
-def thread_function(thread_index):
+def thread_kernel(thread_index):
     logging.info("I am thread %s", thread_index)
     time.sleep(2)
     logging.info("I am thread %s, and I am done", thread_index)
@@ -16,7 +16,7 @@ if __name__ == "__main__":
     # the arguments to that function.
     logging.info("Create thread")
     # The main thread will not wait for the daemon thtread to complete.
-    thread_1 = threading.Thread(target=thread_function, args=(1,), daemon=True)
+    thread_1 = threading.Thread(target=thread_kernel, args=(1,), daemon=True)
     logging.info("Start thread")
     thread_1.start()
     logging.info("Thread execution complete")
