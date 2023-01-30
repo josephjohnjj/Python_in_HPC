@@ -16,10 +16,11 @@ thread_index = [1, 2, 3]
 # create an instance of ThreadPoolExecutor
 pool = ThreadPoolExecutor(max_workers=8)
 
-# launch the thread by mapping each one thtread index to one thread
-results = pool.map(thread_kernel, thread_index) # This is non-blocking
+# submit the tasks to the threadpool
+future = pool.submit(thread_kernel, 1) # this does not blocks
 
-for res in results:
-    print(res) 
+result = future.result() # this blocks
+
+print(result)
 
 pool.shutdown()
