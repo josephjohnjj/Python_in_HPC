@@ -1,44 +1,45 @@
 import logging
 import threading
 import time
+from time import sleep
 from concurrent.futures import ThreadPoolExecutor
 from concurrent.futures import wait
 
 
 def thread_kernel_add(thread_index, repeat, value):
-    global sum # modify the scope of the variable
-    logging.info("Initial sum in thread %s : %d", thread_index, sum)
-    global lock
     logging.info("I am thread %s", thread_index)
 
-    #lock.acquire()
-
+    global sum # modify the scope of the variable
+    global lock
+    logging.info("Initial sum in thread %s : %d", thread_index, sum)
+   
+    lock.acquire()
     for i in range(repeat):
-        #tmp = sum
-        #tmp = sum + value  
-        #sum = tmp
-        sum += value
-        
-    #lock.release()
+        tmp = sum
+        sleep(0)
+        tmp = tmp + value
+        sleep(0)
+        sum = tmp
+    lock.release()
 
     logging.info("Final sum in thread %s : %d", thread_index, sum)
     logging.info("I am thread %s, and I am done", thread_index)
 
 def thread_kernel_sub(thread_index, repeat, value):
-    global sum # modify the scope of the variable
-    logging.info("Initial sum in thread %s : %d", thread_index, sum)
-    global lock
     logging.info("I am thread %s", thread_index)
 
-    #lock.acquire()
-
+    global sum # modify the scope of the variable
+    global lock
+    logging.info("Initial sum in thread %s : %d", thread_index, sum)
+    
+    lock.acquire()
     for i in range(repeat):
-        #tmp = sum
-        #tmp = sum - value  
-        #sum = tmp  
-        sum -= value
-        
-    #lock.release()
+        tmp = sum
+        sleep(0)
+        tmp = tmp - value
+        sleep(0)
+        sum = tmp
+    lock.release()
 
     logging.info("Final sum in thread %s : %d", thread_index, sum)
     logging.info("I am thread %s, and I am done", thread_index)
