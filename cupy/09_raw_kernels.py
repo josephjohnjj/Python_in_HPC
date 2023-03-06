@@ -13,7 +13,7 @@ x = cp.arange(25, dtype=cp.float32).reshape(5, 5)
 y = cp.arange(25, dtype=cp.float32).reshape(5, 5)
 z = cp.zeros((5, 5), dtype=cp.float32)
 
-# When calling a raw kernel ypu have to specify the 
+# When calling a raw kernel ypu have to specify  
 # how threads are grouped (grids and blocks)
 # https://developer.nvidia.com/blog/cuda-refresher-cuda-programming-model/
 
