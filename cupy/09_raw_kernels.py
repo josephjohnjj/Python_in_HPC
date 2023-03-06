@@ -1,19 +1,22 @@
 import numpy as np
 import cupy as cp
 
-# 4 parts :
-#   1. an input argument list
-#   2. an output argument list
-#   3. loop body
-#   4. kernel name
+add_kernel = cp.RawKernel(r'''
+    extern "C" __global__
+    void my_add(const float* x1, const float* x2, float* y) 
+    {
+        int tid = blockDim.x * blockIdx.x + threadIdx.x;
+        y[tid] = x1[tid] + x2[tid];
+    }''', 'my_add')
 
-# i indicates the index within the loop
-# _ind.size() indicates total number of elements to apply the elementwise operation
-element_sum = cp.ElementwiseKernel('T x, raw T y', 'T z', 'z = x + y[_ind.size() - i - 1]', 'element_sum')
+x = cp.arange(25, dtype=cp.float32).reshape(5, 5)
+y = cp.arange(25, dtype=cp.float32).reshape(5, 5)
+z = cp.zeros((5, 5), dtype=cp.float32)
 
-x = cp.array([1, 2, 3], dtype=np.float32)
-y = cp.array([4, 5, 6], dtype=np.float32)
+# When calling a raw kernel ypu have to specify the 
+# how threads are grouped (grids and blocks)
+# https://developer.nvidia.com/blog/cuda-refresher-cuda-programming-model/
 
-z = element_sum(x, y)
+add_kernel((5,), (5,), (x, y, z))
 print(z)
 
