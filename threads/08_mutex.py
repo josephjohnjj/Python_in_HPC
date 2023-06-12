@@ -43,21 +43,22 @@ def thread_kernel_sub(thread_index, repeat, value):
 
     logging.info("Final sum in thread %s : %d", thread_index, sum)
     logging.info("I am thread %s, and I am done", thread_index)
- 
-format = "%(asctime)s: %(message)s"
-logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")  
 
-sum  = 0
-lock = threading.Lock()
-
-# launch the threads
-adder = threading.Thread(target=thread_kernel_add, args=(1, 1000000, 100) ) # adder threads
-adder.start()
-
-subtractor = threading.Thread(target=thread_kernel_sub, args=(2, 1000000, 100) ) # subtractor threads
-subtractor.start()
-
-adder.join()
-subtractor.join()
-
-print("Sum = "+ str(sum))
+if __name__ == "__main__":
+    format = "%(asctime)s: %(message)s"
+    logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")  
+    
+    sum  = 0
+    lock = threading.Lock()
+    
+    # launch the threads
+    adder = threading.Thread(target=thread_kernel_add, args=(1, 1000000, 100) ) # adder threads
+    adder.start()
+    
+    subtractor = threading.Thread(target=thread_kernel_sub, args=(2, 1000000, 100) ) # subtractor threads
+    subtractor.start()
+    
+    adder.join()
+    subtractor.join()
+    
+    print("Sum = "+ str(sum))

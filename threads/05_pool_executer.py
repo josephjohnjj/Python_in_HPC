@@ -9,17 +9,20 @@ def thread_kernel(thread_index):
     logging.info("I am thread %s, and I am done", thread_index)
     str1 = "I am thread "+ str(thread_index)
     return str1
- 
 
-thread_index = [1, 2, 3]
+if __name__ == "__main__":
+    format = "%(asctime)s: %(message)s"
+    logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S") 
 
-# create an instance of ThreadPoolExecutor
-pool = ThreadPoolExecutor(max_workers=8)
+    thread_index = [1, 2, 3]
 
-# launch the thread by mapping each one thtread index to one thread
-results = pool.map(thread_kernel, thread_index) # This is non-blocking
+    # create an instance of ThreadPoolExecutor
+    pool = ThreadPoolExecutor(max_workers=8)
 
-for res in results:
-    print(res) 
+    # launch the thread by mapping each one thread index to one thread
+    results = pool.map(thread_kernel, thread_index) # This is non-blocking
 
-pool.shutdown()
+    for res in results:
+        print(res) 
+
+    pool.shutdown()

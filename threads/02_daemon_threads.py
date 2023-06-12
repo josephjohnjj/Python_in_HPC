@@ -15,7 +15,7 @@ if __name__ == "__main__":
     # When creating a thread you have to pass the function the thread will execute and 
     # the arguments to that function.
     logging.info("Create thread")
-    # The main thread will not wait for the daemon thtread to complete.
+    # The main thread will not wait for the daemon thread to complete.
     thread_1 = threading.Thread(target=thread_kernel, args=(1,), daemon=True)
     logging.info("Start thread")
     thread_1.start()

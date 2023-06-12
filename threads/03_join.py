@@ -19,6 +19,7 @@ if __name__ == "__main__":
     logging.info("Start thread")
     thread_1.start()
     logging.info("Thread execution complete")
+    # Force the main thread to wait 
     # The main thread will wait for thread_1 to complete
     thread_1.join()
     logging.info("Exiting.....")
